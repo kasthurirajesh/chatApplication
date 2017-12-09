@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+    <title>Smart-fridge</title>
+    <script src="/socket.io/socket.io.js"></script>
+
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="static/css/demo.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <script src="static/js/angular.js"></script>
+
+
+
+</head>
+
+<body>
+
+<nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+
+        <a id="logo-container"  class="brand-logo" ng-show="show==1" style="font-size: 18px;" >Online friends</a>
+        <a id="logo-container"  class="brand-logo" ng-show="show==3" style="font-size: 18px;">Serach friends</a>
+        <a id="logo-container"  class="brand-logo" ng-show="show==5" style="font-size: 18px;" >Friend request</a>
+
+
+
+        <ul class="right hide-on-med-and-down">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+
+            <li style="height: 100px; background-color: deeppink"><a>  <i class="material-icons center " style="font-size: 100px;padding-top: 30px; color: white"> person </i></a></li>
+            <li><a> Hi    <span style=" font: italic bold 12px/30px Georgia, serif ; font-weight: 900 "> <strong>  {{MyOwnName}} !!!  </strong>  </span>    </a>   </li>
+            <li ng-click="changeMode()"> <a>Online Friends</a></li>
+            <li ng-click="search()" > <a>  <span>  Search</span> </a></li>
+            <li ng-click="friendFrequest()" ><a>  <span>  Friend Request</span> </a></li>
+            <!--<li><a>Friends</a></li>-->
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+
+
+<!--   show ==1   -->
+
+<div class="row" ng-show="show==1">
+
+    <div ng-repeat="friend in onlinefriends">
+
+        <div class="col s10 offset-s1 card-panel center" style="padding: 10px;" ng-click="chat($index)">
+            {{friend.friend}}
+        </div>
+    </div>
+
+</div>
+
+
+<!-- show ==2 -->
+
+<div ng-show="show==2">
+    <div class="menu">
+        <div class="back" ng-click="changeMode()"><i class="fa fa-chevron-left"></i> <img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+        <div class="name">{{showName}}</div>
+        <!--<div class="last">18:09</div>-->
+    </div>
+
+    <ol class="chat">
+        <div ng-repeat="mess in Messages track by $index">
+
+            <div ng-show="mess.sender==MyOwnName">
+                <li class="self">
+                    <div class="avatar"><img src="https://i.imgur.com/HYcn9xO.png" draggable="false"/></div>
+                    <div class="msg">
+                        <p>{{mess.m }}</p>
+                        <time>20:18</time>
+                    </div>
+                </li>
+
+            </div>
+            <div ng-show="mess.sender!=MyOwnName">
+                <li class="other">
+                    <div class="avatar"><img src="https://i.imgur.com/DY6gND0.png" draggable="false"/></div>
+                    <div class="msg">
+                        <p>{{mess.m}}</p>
+                        <time>{{mess.Date}}</time>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </ol>
+
+    <div class="row">
+        <div class="col s8" style="border: 1px black" >
+            <input placeholder="Type Here !!"   ng-model="information"  type="text" class="active validate "  style="background-color: white" required>
+        </div>
+        <div class="col s3" style="border: 1px pink" >     <button type="button" class="btn btn-success"  ng-click="send()">send </button> </div>
+
+    </div>
+
+
+    </div>
+
+
+<!--   show 3
+       this is for search
+-->
+
+<div ng-show="show==3" class="row">
+
+    <br><br>
+    <div class="col s11">
+        <form class="col s12" ng-submit="searchSubmit()">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">search</i>
+                    <input placeholder="Username"  ng-model="form.userId" id="name"  pattern="[a-zA-Z0-9]{4,}" type="text" class="active validate" required>
+                    <label for="name">Username</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12 center">
+                    <button class="btn waves-effect waves-light pink" type="submit" name="action"> search
+                        <i class="material-icons right">search</i>
+                    </button>
+
+                </div>
+            </div >
+
+        </form>
+    </div>
+
+
+<!--   showing the results -->
+    <div class="row">
+        <div ng-repeat="x in searchResults">
+            <div class="col s10 offset-s1 card" style="padding :10px;" ng-click="particular($index)">
+                <p>
+                    <span style="float: left; font-size: 70px;">   <i class="material-icons right"> person_add </i>  </span>
+                    <span style="margin-left: 20px;">  {{x.name}}</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--  show == 4
+      search person
+ -->
+
+<div ng-show="show==4">
+
+    <div style="" class="row">
+        <div class="col s8 center">
+            <i class="material-icons right" style="font-size: 100px;"> person </i>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col s10 offset-s1 card" style="padding :10px;">
+            <p>
+                <span style="float: left; font-size: 18px;">   <strong> Name :  </strong></span>
+                <span style="margin-left: 20px;">  {{particularPerson.name}}  </span>
+            </p>
+        </div>
+        <div class="col s10 offset-s1 card" style="padding :10px;">
+            <p>
+                <span style="float: left; font-size: 18px;">  <strong> Location : </strong> </span>
+                <span style="margin-left: 20px;"> {{ particularPerson.location}}   </span>
+            </p>
+        </div>
+
+        <div class="col s10 offset-s1 card" style="padding :10px;">
+            <p>
+                <span style="float: left; font-size: 18px;"> <strong>  Mobile No : </strong> </span>
+                <span style="margin-left: 20px;">+91 {{particularPerson.mobile}}  </span>
+            </p>
+        </div>
+
+        <div class="col s10 offset-s1 card center" style="padding :10px;">
+            <button class="btn waves-effect waves-light pink" type="submit" name="action" ng-click="connect()">Connect</button>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+<!--
+    show==5
+
+-->
+
+<div ng-show="show==5">
+
+    <div class="row">
+
+        <div ng-repeat="x in friendRequestData">
+            <div class="col s10 offset-s1 card" style="padding :10px;"  ng-click="particularFriendRequest($index)">
+                <p>
+                    <span style="float: left; font-size: 70px;">   <i class="material-icons right"> person_add </i>  </span>
+                    <span style="margin-left: 20px;">  {{x.name}}</span>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!--  show==6
+  -->
+
+<div ng-show="show==6">
+    <div style="" class="row">
+
+        <div class="col s8 center">
+
+            <i class="material-icons right" style="font-size: 100px;"> person </i>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col s10 offset-s1 card" style="padding :10px;">
+            <p>
+                <span style="float: left; font-size: 18px;">   <strong> Name :  </strong></span>
+                <span style="margin-left: 20px;">  {{friendRequestFriend.name}}  </span>
+            </p>
+        </div>
+        <div class="col s10 offset-s1 card" style="padding :10px;">
+            <p>
+                <span style="float: left; font-size: 18px;">  <strong> Location : </strong> </span>
+                <span style="margin-left: 20px;"> {{ friendRequestFriend.location}}   </span>
+            </p>
+        </div>
+
+        <div class="col s10 offset-s1 card" style="padding :10px;">
+            <p>
+                <span style="float: left; font-size: 18px;"> <strong>  Mobile No : </strong> </span>
+                <span style="margin-left: 20px;">+91 {{friendRequestFriend.mobile}}  </span>
+            </p>
+        </div>
+
+        <div class="col s10 offset-s1 card center" style="padding :10px;">
+            <button class="btn waves-effect waves-light pink" type="submit" name="action"
+                    ng-click="confirm()">Confirm</button>
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+<!--<footer class="page-footer teal">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Team Bio</h5>
+                <p class="grey-text text-lighten-4">We are a team of college students working on this project for our <br> CS-451, Design of IOT course.</p>
+
+
+            </div>
+            <div class="col l3 s12">
+                <h5 class="white-text">Made by -</h5>
+                <ul>
+                    <a class="brown-text text-lighten-3">Kasthuri Rajesh-1401024</a>
+                    <br><a class="brown-text text-lighten-3">Kundrapu Dilip Kumar-1401027</a>
+                    <br><a class="brown-text text-lighten-3">Prerna Prem-1401040</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class=" center footer-copyright">
+        <a style="width: 2000px" class="center white-text">©Copyrights reserved, 2017.</a>
+    </div>
+</footer>-->
+
+<!--  Scripts-->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="static/js/materialize.js"></script>
+<script src="static/js/init.js"></script>
+
+</body>
+</html>

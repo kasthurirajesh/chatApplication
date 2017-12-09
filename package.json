@@ -1,0 +1,22 @@
+{
+  "name": "basicchat",
+  "version": "1.0.0",
+  "description": "chatting application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "angular-localstorage": "^1.1.5",
+    "body-parser": "~1.0.0",
+    "express": "*",
+    "ip": "^1.1.3",
+    "mongoose": "^4.6.1",
+    "mongojs":"*",
+    "socket.io": "*",
+    "async": "^1.4.2",
+    "underscore": "*.*.*"
+  },
+  "author": "rajesh",
+  "license": "ISC"
+}

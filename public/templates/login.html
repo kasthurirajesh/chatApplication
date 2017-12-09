@@ -1,0 +1,172 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">      
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>           
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>    
+
+<script type="text/javascript">
+
+
+ $(document).ready(function() {
+   $('select').material_select();
+ });
+</script>
+
+
+    <style>
+        nav ul a,
+        nav .brand-logo {
+            color: #444;
+        }
+
+        p {
+            line-height: 2rem;
+        }
+
+        .button-collapse {
+            color: #26a69a;
+        }
+
+        .parallax-container {
+            min-height: 380px;
+            line-height: 0;
+            height: auto;
+            color: rgba(255,255,255,.9);
+        }
+        .parallax-container .section {
+            width: 100%;
+        }
+
+        @media only screen and (max-width : 992px) {
+            .parallax-container .section {
+                position: absolute;
+                top: 40%;
+            }
+            #index-banner .section {
+                top: 10%;
+            }
+        }
+
+        @media only screen and (max-width : 600px) {
+            #index-banner .section {
+                top: 0;
+            }
+        }
+
+        .icon-block {
+            padding: 0 15px;
+        }
+        .icon-block .material-icons {
+            font-size: inherit;
+        }
+
+        footer.page-footer {
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+
+
+<nav class="white" role="navigation" style="background-color: black;">
+    <div class="nav-wrapper container">
+        <a id="logo-container" href="#" class="brand-logo" style="color:black; font-size: 18px;">Idea To Startup</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+
+        <ul id="nav-mobile" class="side-nav">
+            <li><a href="#">Navbar Link</a></li>
+        </ul>
+        <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </div>
+</nav>
+
+
+<div style="height:590px;">
+  <div class="row">
+
+
+    <div class="col s0 m3 white-test">
+        <span class="white-text"> csafs</span>
+    </div>
+
+    <div class="col s12 m6">
+           <br><br><br>
+          <div class="row card-panel">
+              <form class="col s12" ng-submit="submit()">
+
+                  <div class="row">
+                   <div class="input-field col s12">
+                      <i class="material-icons prefix">account_circle</i>
+                      <input placeholder="Username"  ng-model="form.userId" id="name"  pattern="[a-zA-Z0-9]{6,}" type="text" class="active validate" required>
+                      <label for="name">Username</label>
+                   </div>
+                 </div>
+
+
+
+                  <div class="row">
+
+                   <div class="input-field col s12 ">     
+                      <i class="material-icons prefix">lock-outline</i>
+                      <input id="password"  ng-model="form.pass" type="password" pattern="[a-zA-Z0-9]{6,}" placeholder="Password" class="validate" required>
+                       <label for="password">Password</label>
+                   </div>
+                 </div>
+
+                  <div class="row">
+                      <div class="col s12 center">
+                            <button class="btn waves-effect waves-light pink" type="submit" name="action">Submit
+                                        <i class="material-icons right">send</i>
+                            </button>
+                      </div>
+                      <div class="col s6">
+                        <p  ng-click="register()"> <a href="#"> <SPAN style="color:rgb(0,188,212);"> Register</SPAN> </a> </p>
+                        </div>
+
+
+                     <br><br><br>
+
+
+
+
+
+                  </div >
+                
+
+
+
+
+
+               </form>
+          </div>        
+
+
+         </div>
+
+
+    </div>
+    
+
+
+
+   </div> 
+
+   
+</div>
+
+
+
+
+
+
+
+
+</body>
+</html>
+

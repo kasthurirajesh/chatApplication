@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+-->
+<head>
+    <meta charset="UTF-8">
+    <title>chat application</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
+    <style>
+        body{
+            margin-top: 30px;
+        }
+        #messageArea{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="userFormArea" class="row">
+            <div class="col-md-12">
+                <form id="userForm">
+                    <div class="form-group">
+                        <label> User Name</label>
+                        <input class="form-control" id="username" />
+                        <br>
+                        <input type="submit" class="btn btn-primary"  value="Login">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="messageArea" class="row">
+            <div class="col-md-4">
+                <div class="well">
+                    <h3>Online users</h3>
+                    <ul class="list-group" id="users"> </ul>
+
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="chat" id="chat"></div>
+                <form id="messageForm">
+                    <div class="form-group">
+                        <label> Enter Message</label>
+                        <textarea class="form-control" id="message"></textarea>
+                        <br>
+                        <input type="submit" class="btn btn-primary" >
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            var socket=io.connect();
+            var $messageForm = $('#messageForm');
+            var $message = $('#message');
+            var $chat = $('#chat');
+
+            var x=socket;
+            console.log("socket data " , x);
+            console.log("socket data " , x.id);
+            console.log("socket io " , x.io);
+
+
+
+
+            $messageForm.submit(function (e) {
+                e.preventDefault();
+                console.log('submitted');
+                socket.emit('send message' , $message.val());
+                $message.val('');
+            });
+            socket.on('new message' , function (data) {
+                console.log(data);
+                    $chat.append('<div class="well">'+ data.message +'</div>')
+            })
+
+            var $messageArea = $('#messageArea')  //form
+            var $userFormArea=$('#userFormArea')
+            var $userForm=$('#userForm')
+            var $users=$('#users')
+            var $username=$('#username')
+
+            $userForm.submit(function (e) {
+                e.preventDefault();
+                console.log('submitted');
+                socket.emit('new user' , $username.val() , function (data) {
+                    if(data){
+
+                    }
+                });
+                $username.val('');
+            });
+
+        });
+    </script>
+
+</body>
+</html>
