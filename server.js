@@ -1,44 +1,3 @@
-/*var express = require('express');
-var app=express();
-var bodyParser = require('body-parser');
-
-var server = require('http').createServer(app);
-var io=require('socket.io').listen(server);
-
-
-
-app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.urlencoded({extended : true}));
-app.use(bodyParser.json());
-
-
-connections=[];*/
-/*
-app.get('/get', function (req, res) {
-    res.sendFile( __dirname + "/" + "index.html" );
-})
-*/
-/*
-io.sockets.on('connection' , function (socket) {
-    console.log("user connected ");
-    connections.push(socket);
-    console.log(socket.id);
-    console.log("connected %s  and connections length" , connections.length );
-    socket.on('disconnect' , function (data) {
-        console.log(socket);
-        connections.slice(connections.indexOf(socket),1 );
-    })
-    //send message
-    socket.on('send message' , function (data) {
-        console.log(data);
-        io.sockets.emit('new message' , {message: data});
-    })
-})
-
-server.listen(3000);
-console.log("server is running.........")
-*/
-
 var express=require('express');
 var app=express();
 var http=require('http').Server(app);
@@ -89,15 +48,6 @@ app.post('/registration', function (req, res) {
             }
         }
     })
-    // where userid = rajesh
-    /*db.users.find({userId:req.body.userId} , function (err, docs) {
-        if(err)
-            throw err;
-        else
-            console.log(docs);
-            res.json(docs);
-    })*/
-
 
 
 })
@@ -151,25 +101,6 @@ app.get('/getdata' , function (req, res) {
             console.log(docs);
             res.json(docs);
         });
-
-
-
-
- /* //  projection of pending array
-
-    db.users.find(  { userId :  "Rajesh"} , { pendingMessages : 1} , function (err, docs) {
-        if(err)
-            throw  err;
-        else
-            console.log(docs);
-    })
-*/
-
-
-
-
-
-
 
 
 
